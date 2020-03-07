@@ -17,7 +17,7 @@ def list_books_by_author() -> List[Dict]:
     }
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    cursor.execute('SELECT name, author_name FROM books WHERE author_name="Truman Capote"')
+    cursor.execute('SELECT name, author_name FROM books WHERE author_name="Kathryn Cramer"')
     results = [{name: author_name} for (name, author_name) in cursor]
     cursor.close()
     connection.close()
