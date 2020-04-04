@@ -1,0 +1,9 @@
+#How to use MyBooksApp
+1. Go into the directory where the docker-compose.yml file is located
+2. Run the command: docker-compose up --build
+3. Run the command: docker ps 
+4. Identify the container ID for the client service
+5. Run the command: docker attach <client-ID>
+6. After you have finished using the app run the following command to stop the containers: docker-compose down
+
+Command 5 will start the client service and now you can type "start" to begin using the app.
