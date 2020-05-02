@@ -3,7 +3,7 @@ version: "3"
 services:
 
   server:
-    image: mariapredescu/idpapp2_server:step2
+    image: mariapredescu/idpapp2_server:final
     links:
       - database
     depends_on:
@@ -13,9 +13,6 @@ services:
     networks:
       - frontend
       - backend
-    restart: on-failure
-    stdin_open: true
-    tty: true
 
   client:
     image: mariapredescu/idpapp2_client:step2
@@ -32,7 +29,7 @@ services:
     tty: true
 
   admin:
-    build: ./admin
+    image: mariapredescu/idpapp2_admin:step3
     links:
       - database
     depends_on:
@@ -57,8 +54,26 @@ services:
       - .:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: 1234
+
+  metrics:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_volume:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+      - frontend
+
 networks:
   frontend:
   backend:
 volumes:
   db_data: {}
+  prometheus_volume: {}

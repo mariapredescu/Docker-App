@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
+from prometheus_flask_exporter import PrometheusMetrics
 import mysql.connector
 import json
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Application info', version='1.0.3')
 
 connection = None
 cursor = None
@@ -69,4 +73,4 @@ def get_my_read_books():
 
 if __name__ == '__main__':
     connect_database()
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5000)
