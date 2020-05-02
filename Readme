@@ -16,4 +16,5 @@ To deploy on swarm:
 1. Go into the directory where the docker-compose.yml file is located
 2. Run the command: docker swarm init
 3. Run the command: docker stack deploy -c docker-compose.yml idp_app
-4. Now the app is running on swarm.
+4. Now the app is running on swarm. Verification commands: docker stack ls; docker stack services idp_app.
+5. To destroy the swarm: docker swarm leave --force.
